@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const AllProjects = () => {
-  const navigate = useNavigate();
   const [projects, setProjects] = useState([
     { id: 1, name: "Project A", status: "To Do" },
     { id: 2, name: "Project B", status: "In Progress" },
@@ -13,10 +12,6 @@ const AllProjects = () => {
   ]);
 
   const statuses = ["To Do", "In Progress", "Done"];
-
-  const handleProjectClick = (projectId) => {
-    navigate(`/project/${projectId}`);
-  };
 
   return (
     <div className="container mx-auto p-4">
@@ -29,18 +24,16 @@ const AllProjects = () => {
               {projects
                 .filter((project) => project.status === status)
                 .map((project) => (
-                  <Card
-                    key={project.id}
-                    className="cursor-pointer hover:shadow-md transition-shadow"
-                    onClick={() => handleProjectClick(project.id)}
-                  >
-                    <CardHeader>
-                      <CardTitle>{project.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-gray-500">Click to view details</p>
-                    </CardContent>
-                  </Card>
+                  <Link key={project.id} to={`/project/${project.id}`}>
+                    <Card className="cursor-pointer hover:shadow-md transition-shadow">
+                      <CardHeader>
+                        <CardTitle>{project.name}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-gray-500">Click to view details</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
             </div>
           </div>
