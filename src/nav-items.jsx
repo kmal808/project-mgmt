@@ -1,6 +1,7 @@
-import { Home, FolderPlus } from "lucide-react";
+import { Home, FolderPlus, LayoutGrid } from "lucide-react";
 import Index from "./pages/Index.jsx";
 import CreateProject from "./pages/CreateProject.jsx";
+import AllProjects from "./pages/AllProjects.jsx";
 
 /**
  * Central place for defining the navigation items. Used for navigation components and routing.
@@ -11,6 +12,12 @@ export const navItems = [
     to: "/",
     icon: <Home className="h-4 w-4" />,
     page: <Index />,
+  },
+  {
+    title: "All Projects",
+    to: "/projects",
+    icon: <LayoutGrid className="h-4 w-4" />,
+    page: <AllProjects />,
   },
   {
     title: "Create Project",
