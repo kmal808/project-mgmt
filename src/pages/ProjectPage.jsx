@@ -10,7 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Timeline, TimelineItem, TimelineConnector, TimelineContent, TimelineDot, TimelineSeparator } from "@mui/lab";
 import { CalendarIcon, Plus, X } from "lucide-react";
 
 const ProjectPage = () => {
@@ -185,23 +184,23 @@ const ProjectPage = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Timeline</CardTitle>
+            <CardTitle>Task Timeline</CardTitle>
           </CardHeader>
           <CardContent>
-            <Timeline>
+            <div className="space-y-4">
               {project.tasks.map((task, index) => (
-                <TimelineItem key={task.id}>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    {index < project.tasks.length - 1 && <TimelineConnector />}
-                  </TimelineSeparator>
-                  <TimelineContent>
+                <div key={task.id} className="flex items-start">
+                  <div className="flex flex-col items-center mr-4">
+                    <div className="w-3 h-3 bg-primary rounded-full"></div>
+                    {index < project.tasks.length - 1 && <div className="w-0.5 h-full bg-gray-200 mt-1"></div>}
+                  </div>
+                  <div>
                     <h3 className="font-semibold">{task.name}</h3>
                     <p className="text-sm text-gray-500">{task.status}</p>
-                  </TimelineContent>
-                </TimelineItem>
+                  </div>
+                </div>
               ))}
-            </Timeline>
+            </div>
           </CardContent>
         </Card>
       </div>
