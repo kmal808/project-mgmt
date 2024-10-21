@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useProjects, useUpdateProject } from "@/integrations/supabase";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const AllProjects = () => {
-  const { data: projects, isLoading, isError } = useProjects();
+  const { data: projects, isLoading, isError, error } = useProjects();
   const updateProject = useUpdateProject();
   const [columns, setColumns] = useState({
     "To Do": [],
@@ -65,8 +68,39 @@ const AllProjects = () => {
     });
   };
 
-  if (isLoading) return <div>Loading projects...</div>;
-  if (isError) return <div>Error loading projects</div>;
+  if (isLoading) {
+    return (
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-6">All Projects</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {["To Do", "In Progress", "Done"].map((status) => (
+            <div key={status} className="bg-gray-100 p-4 rounded-lg">
+              <h2 className="text-xl font-semibold mb-4">{status}</h2>
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-24 w-full" />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="container mx-auto p-4">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>
+            {error?.message || "An error occurred while loading projects. Please try again later."}
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4">
